@@ -5,3 +5,7 @@ type Query {
     hello3: String!
     hello4: String!
 }
+
+type Mutation {
+    sayHello(name: String!) : String!
+}
