@@ -4,8 +4,56 @@ type Query {
     hello2: String!
     hello3: String!
     hello4: String!
+    character: Character!
 }
 
 type Mutation {
     sayHello(name: String!) : String!
+}
+
+
+
+enum Attribute {
+  STR
+  DEX
+  CON
+  INT
+  WIS
+  CHA
+}
+
+type CharacterAttributes {
+  STR: Int
+  DEX: Int
+  CON: Int
+  INT: Int
+  WIS: Int
+  CHA: Int
+}
+
+enum Proficiency {
+  Untrained
+  Trained
+  Expert
+  Master
+  Legendary
+}
+
+type Skill {
+  attribute: Attribute
+  name: String
+  proficiency: Proficiency
+}
+
+type Character {
+  level: Int
+  name: String
+  race: String
+  background: String
+  class: String
+  attributes: CharacterAttributes
+  baseSkills: [Skill]
+  classSkills: [Skill]
+  perception: Skill
+  saves: [Skill]
 }
