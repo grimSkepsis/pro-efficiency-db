@@ -1,21 +1,35 @@
-from ariadne import QueryType, graphql_sync, make_executable_schema
+from ariadne import (
+    QueryType,
+    graphql_sync,
+    make_executable_schema,
+    load_schema_from_path,
+)
 from ariadne.explorer import ExplorerGraphiQL
 from flask import Flask, jsonify, request
 
-type_defs = """
-    type Query {
-        hello: String!
-    }
-"""
+# type_defs = """
+#     type Query {
+#         hello: String!
+#     }
+# """
+
+type_defs = load_schema_from_path("schema.graphql")
 
 query = QueryType()
 
 
 @query.field("hello")
 def resolve_hello(_, info):
-    request = info.context
+    request = info.context["request"]
     user_agent = request.headers.get("User-Agent", "Guest")
     return "Hello, %s!" % user_agent
+
+
+@query.field("hello2")
+def resolve_hello(_, info):
+    request = info.context["request"]
+    user_agent = request.headers.get("User-Agent", "Guest")
+    return "Hello2, %s!" % user_agent
 
 
 schema = make_executable_schema(type_defs, query)

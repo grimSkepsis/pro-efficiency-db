@@ -6,13 +6,6 @@ app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])
 
 
-# @app.route("/character-data")
-# def player_data():
-#     with open("data/player-stats.json") as f:
-#         data = json.load(f)
-#     return data
-
-
 @app.route("/character-data", methods=["GET", "POST"])
 def player_data():
     if request.method == "POST":
