@@ -6,6 +6,7 @@ from ariadne import (
 )
 from ariadne.explorer import ExplorerGraphiQL
 from flask import Flask, jsonify, request
+from resolvers.hello3 import query as query3
 
 # type_defs = """
 #     type Query {
@@ -32,7 +33,7 @@ def resolve_hello(_, info):
     return "Hello2, %s!" % user_agent
 
 
-schema = make_executable_schema(type_defs, query)
+schema = make_executable_schema(type_defs, [query, query3])
 
 app = Flask(__name__)
 
