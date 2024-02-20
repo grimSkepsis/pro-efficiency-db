@@ -7,7 +7,7 @@ from ariadne import (
 from ariadne.explorer import ExplorerGraphiQL
 from flask import Flask, jsonify, request
 from resolvers.hello3 import query as query3, mutation
-from resolvers.character import character, query as character_query
+from resolvers.character import resolvers as character_resolvers
 from managers.character import CharacterManager
 
 
@@ -34,7 +34,8 @@ def resolve_hello(_, info):
 
 
 schema = make_executable_schema(
-    type_defs, [query, query3, mutation, character, character_query]
+    type_defs,
+    [query, query3, mutation, *character_resolvers],
 )
 
 app = Flask(__name__)
@@ -65,7 +66,10 @@ def graphql_server():
     success, result = graphql_sync(
         schema,
         data,
-        context_value={"request": request, "character_manager": character_manager},
+        context_value={
+            "request": request,
+            "character_manager": character_manager,
+        },
         debug=app.debug,
     )
 
