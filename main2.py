@@ -8,16 +8,15 @@ from ariadne.explorer import ExplorerGraphiQL
 from flask import Flask, jsonify, request
 from resolvers.hello3 import query as query3, mutation
 from resolvers.character import character, query as character_query
+from managers.character import CharacterManager
 
-# type_defs = """
-#     type Query {
-#         hello: String!
-#     }
-# """
 
 type_defs = load_schema_from_path("schema.graphql")
 
 query = QueryType()
+
+
+character_manager = CharacterManager()
 
 
 @query.field("hello")
@@ -64,7 +63,10 @@ def graphql_server():
     # Note: Passing the request to the context is optional.
     # In Flask, the current request is always accessible as flask.request
     success, result = graphql_sync(
-        schema, data, context_value={"request": request}, debug=app.debug
+        schema,
+        data,
+        context_value={"request": request, "character_manager": character_manager},
+        debug=app.debug,
     )
 
     status_code = 200 if success else 400
