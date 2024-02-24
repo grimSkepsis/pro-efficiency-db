@@ -100,4 +100,19 @@ def resolve_proficiency(obj, *_):
     return obj["proficiency"]
 
 
+@character.field("classSkills")
+def resolve_classSkills(obj, *_):
+    return obj["classSkills"]
+
+
+@character.field("perception")
+def resolve_perception(obj, *_):
+    return obj["perception"]
+
+
+@character.field("saves")
+def resolve_saves(obj, *_):
+    return obj["saves"]
+
+
 resolvers = [query, character, characterAttributes, skill]
