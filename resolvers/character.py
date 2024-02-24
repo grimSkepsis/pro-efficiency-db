@@ -49,32 +49,55 @@ characterAttributes = ObjectType("CharacterAttributes")
 
 @characterAttributes.field("strength")
 def resolve_strength(obj, *_):
-    return obj["STR"]
+    return obj["strength"]
 
 
 @characterAttributes.field("dexterity")
 def resolve_dexterity(obj, *_):
-    return obj["DEX"]
+    return obj["dexterity"]
 
 
 @characterAttributes.field("constitution")
 def resolve_constitution(obj, *_):
-    return obj["CON"]
+    return obj["constitution"]
 
 
 @characterAttributes.field("intelligence")
 def resolve_intelligernce(obj, *_):
-    return obj["INT"]
+    return obj["intelligence"]
 
 
 @characterAttributes.field("wisdom")
 def resolve_wisdom(obj, *_):
-    return obj["WIS"]
+    return obj["wisdom"]
 
 
 @characterAttributes.field("charisma")
 def resolve_charisma(obj, *_):
-    return obj["CHA"]
+    return obj["charisma"]
 
 
-resolvers = [query, character, characterAttributes]
+@character.field("baseSkills")
+def resolve_baseSkills(obj, *_):
+    return obj["baseSkills"]
+
+
+skill = ObjectType("Skill")
+
+
+@skill.field("attribute")
+def resolve_attribute(obj, *_):
+    return obj["attribute"]
+
+
+@skill.field("name")
+def resolve_name(obj, *_):
+    return obj["name"]
+
+
+@skill.field("proficiency")
+def resolve_proficiency(obj, *_):
+    return obj["proficiency"]
+
+
+resolvers = [query, character, characterAttributes, skill]
